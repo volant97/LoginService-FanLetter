@@ -4,10 +4,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LoginToggle } from "redux/modules/authSlice";
 import styled from "styled-components";
+import { toast } from "react-toastify";
 
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const notify = () =>
+    toast.success("🦄 로그인 성공!", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
 
   const [signUpClicked, setSignUpClicked] = useState(false);
   const auth = useSelector((state) => state.auth);
@@ -29,6 +42,7 @@ function Login() {
   const loginBtnClickHandler = () => {
     dispatch(LoginToggle(auth));
     navigate("/home");
+    notify();
   };
 
   const signUpFormSubmitHandler = async (e) => {
@@ -55,6 +69,7 @@ function Login() {
       password: "",
       nickname: "",
     });
+    setSignUpClicked(false);
   };
 
   return (
@@ -64,7 +79,7 @@ function Login() {
         <StLogin>
           <h1>로그인</h1>
           <input type="text" placeholder="아이디 (4~10글자)" />
-          <input type="text" placeholder="비밀번호 (4~15글자)" />
+          <input type="password" placeholder="비밀번호 (4~15글자)" />
           <button onClick={loginBtnClickHandler}>로그인</button>
           <button onClick={() => setSignUpClicked(true)}>회원가입</button>
         </StLogin>
@@ -85,7 +100,7 @@ function Login() {
               }
             />
             <input
-              type="text"
+              type="password"
               placeholder="비밀번호 (4~15글자)"
               value={inputValue.password}
               onChange={(e) =>
