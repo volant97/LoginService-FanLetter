@@ -1,4 +1,6 @@
 import fakeData from "fakeData.json";
+
+// Action Value
 // 팬레터 추가
 const ADD_LETTER = "letters/ADD_LETTER";
 // 팬레터 삭제
@@ -6,6 +8,7 @@ const DELETE_LETTER = "letters/DELETE_LETTER";
 // 팬레터 수정
 const EDIT_LETTER = "letters/EDIT_LETTER";
 
+// Action Creator
 export const addLetter = (payload) => {
   return { type: ADD_LETTER, payload };
 };
@@ -16,8 +19,10 @@ export const editLetter = (payload) => {
   return { type: EDIT_LETTER, payload };
 };
 
+// initialState
 const initialState = fakeData;
 
+// Reducer
 const letters = (state = initialState, action) => {
   switch (action.type) {
     case ADD_LETTER:
