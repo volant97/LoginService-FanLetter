@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getFormattedDate } from "util/date";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteLetter, editLetter } from "redux/modules/letters";
+import { deleteLetter, editLetter } from "redux/modules/lettersSlice";
 
 export default function Detail() {
   const dispatch = useDispatch();
