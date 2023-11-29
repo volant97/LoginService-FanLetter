@@ -11,12 +11,12 @@ function Layout() {
 
   const logoutBtnClickHandler = () => {
     dispatch(LoginToggle(auth));
-    navigete("/login");
+    navigete("/");
   };
 
   return (
     <StContainer>
-      <button onClick={() => navigete("/")}>Home</button>
+      <button onClick={() => navigete("/home")}>Home</button>
       <StProfileAndLogin>
         <button onClick={() => navigete("/profile")}>내프로필</button>
         {auth ? (
@@ -24,9 +24,8 @@ function Layout() {
           <button onClick={logoutBtnClickHandler}>로그아웃</button>
         ) : (
           // 로그인 X
-          <button onClick={() => navigete("/login")}>로그인</button>
+          <button onClick={() => navigete("/")}>로그인</button>
         )}
-        <p>{auth ? "로그인 O" : "로그인 X"}</p>
       </StProfileAndLogin>
     </StContainer>
   );

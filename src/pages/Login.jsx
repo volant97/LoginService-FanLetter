@@ -13,7 +13,7 @@ function Login() {
 
   const loginBtnClickHandler = () => {
     dispatch(LoginToggle(auth));
-    navigate("/");
+    navigate("/home");
   };
 
   return (

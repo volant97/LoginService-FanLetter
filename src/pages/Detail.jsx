@@ -24,7 +24,7 @@ export default function Detail() {
     if (!answer) return;
 
     dispatch(deleteLetter(id));
-    navigate("/");
+    navigate("/home");
   };
   const onEditDone = () => {
     if (!editingText) return alert("수정사항이 없습니다.");
@@ -35,7 +35,7 @@ export default function Detail() {
   };
   return (
     <Container>
-      <Link to="/">
+      <Link to="/home">
         <HomeBtn>
           <Button text="홈으로" />
         </HomeBtn>
