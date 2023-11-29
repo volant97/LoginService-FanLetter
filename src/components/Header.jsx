@@ -1,9 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import Tabs from "./Tabs";
 import styled from "styled-components";
 
 export default function Header() {
+  const navigete = useNavigate();
+
   return (
     <Container>
+      <button onClick={() => navigete("/login")}>로그인</button>
       <Title>에스파 팬레터함</Title>
       <Tabs />
     </Container>
