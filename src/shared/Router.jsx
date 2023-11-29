@@ -1,3 +1,4 @@
+import Layout from "components/Layout";
 import Detail from "pages/Detail";
 import Home from "pages/Home";
 import Login from "pages/Login";
@@ -7,6 +8,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 export default function Router() {
   return (
     <BrowserRouter>
+      <Layout />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />

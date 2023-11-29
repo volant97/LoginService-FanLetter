@@ -38,8 +38,6 @@ function Login() {
           <button onClick={() => setSignUpClicked(false)}>로그인</button>
         </StSignUp>
       )}
-
-      <button onClick={() => navigate("/")}>Home</button>
     </StContainer>
   );
 }
@@ -52,12 +50,6 @@ const StContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-
-  /* 임시버튼 */
-  > button {
-    position: absolute;
-    top: 10%;
-  }
 `;
 
 const StLogin = styled.div`
