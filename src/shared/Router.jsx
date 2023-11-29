@@ -10,7 +10,6 @@ export default function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route exact path="/signup" element={<SignUp />}></Route>
         <Route path="/" element={<Home />} />
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/profile" element={<Profile />} />
