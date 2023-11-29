@@ -41,7 +41,7 @@ export default Layout;
 const StContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: lightgray;
+  background-color: #8d8d8d;
 `;
 
 const StProfileAndLogin = styled.div`
