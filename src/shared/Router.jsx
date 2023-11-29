@@ -11,13 +11,14 @@ export default function Router() {
 
   return (
     <BrowserRouter>
-      {auth ? <Layout /> : null}
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/detail/:id" element={<Detail />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="*" element={<Navigate replace to="/" />} />
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Login />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/detail/:id" element={<Detail />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="*" element={<Navigate replace to="/" />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

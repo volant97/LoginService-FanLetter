@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { LoginToggle } from "redux/modules/authSlice";
@@ -15,19 +15,22 @@ function Layout() {
   };
 
   return (
-    <StContainer>
-      <button onClick={() => navigete("/home")}>Home</button>
-      <StProfileAndLogin>
-        <button onClick={() => navigete("/profile")}>내프로필</button>
-        {auth ? (
-          // 로그인 O
-          <button onClick={logoutBtnClickHandler}>로그아웃</button>
-        ) : (
-          // 로그인 X
-          <button onClick={() => navigete("/")}>로그인</button>
-        )}
-      </StProfileAndLogin>
-    </StContainer>
+    <>
+      <StContainer>
+        <button onClick={() => navigete("/home")}>Home</button>
+        <StProfileAndLogin>
+          <button onClick={() => navigete("/profile")}>내프로필</button>
+          {auth ? (
+            // 로그인 O
+            <button onClick={logoutBtnClickHandler}>로그아웃</button>
+          ) : (
+            // 로그인 X
+            <button onClick={() => navigete("/")}>로그인</button>
+          )}
+        </StProfileAndLogin>
+      </StContainer>
+      <Outlet />
+    </>
   );
 }
 
