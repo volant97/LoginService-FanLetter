@@ -1,24 +1,34 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { LoginToggle } from "redux/modules/authSlice";
 import styled from "styled-components";
 
 function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const [isLogin, setIsLogin] = useState(false);
   const [signUpClicked, setSignUpClicked] = useState(false);
+  const auth = useSelector((state) => state.auth);
+
+  const loginBtnClickHandler = () => {
+    dispatch(LoginToggle(auth));
+    navigate("/");
+  };
 
   return (
     <StContainer>
       {!signUpClicked ? (
+        // 로그인 화면
         <StLogin>
           <h1>로그인</h1>
           <input type="text" placeholder="아이디 (4~10글자)" />
           <input type="text" placeholder="비밀번호 (4~15글자)" />
-          <button>로그인</button>
+          <button onClick={loginBtnClickHandler}>로그인</button>
           <button onClick={() => setSignUpClicked(true)}>회원가입</button>
         </StLogin>
       ) : (
+        // 회원가입 화면
         <StSignUp>
           <h1>회원가입</h1>
           <input type="text" placeholder="아이디 (4~10글자)" />
