@@ -16,18 +16,18 @@ const notify = (message, type) => {
   };
 
   if (type === "info") {
-    toast.info(message, inner);
+    return toast.info(message, inner);
   }
   if (type === "success") {
-    toast.success(message, inner);
+    return toast.success(message, inner);
   }
   if (type === "warning") {
-    toast.warning(message, inner);
+    return toast.warning(message, inner);
   }
   if (type === "error") {
-    toast.error(message, inner);
+    return toast.error(message, inner);
   } else {
-    toast(message, inner);
+    return toast(message, inner);
   }
 };
 
