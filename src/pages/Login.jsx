@@ -49,24 +49,24 @@ function Login() {
     if (!loginValidate()) return;
 
     // 로그인 로직
-    const { data } = await axios
-      .post(`${process.env.REACT_APP_AUTH_BASE_URL}/login`, inputValue)
-      .catch((error) => {
-        if (axios.isAxiosError(error)) {
-          notify(`${error.response.data.message}`, "error");
-          return "";
-        }
-      });
-    if (!data) return;
-
-    const { accessToken, userId, nickname, avatar } = data;
-    saveLocalStorage("accessToken", accessToken);
-    saveLocalStorage("userId", userId);
-    saveLocalStorage("nickname", nickname);
-    saveLocalStorage("avatar", avatar);
-    dispatch(LoginToggle(auth));
-    navigate("/");
-    notify("🦄 로그인 성공!", "success");
+    try {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_AUTH_BASE_URL}/login`,
+        inputValue
+      );
+      const { accessToken, userId, nickname, avatar } = data;
+      saveLocalStorage("accessToken", accessToken);
+      saveLocalStorage("userId", userId);
+      saveLocalStorage("nickname", nickname);
+      saveLocalStorage("avatar", avatar);
+      dispatch(LoginToggle(auth));
+      navigate("/");
+      notify("🦄 로그인 성공!", "success");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        notify(`${error.response.data.message}`, "error");
+      }
+    }
   };
 
   const goToSignUpPageBtnClickHandler = () => {
