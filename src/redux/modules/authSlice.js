@@ -3,7 +3,7 @@ import { loadLocalStorage } from "utils/LocalStorage";
 
 const accessToken = loadLocalStorage("accessToken");
 
-let initialState = !!accessToken ? true : false;
+let initialState = !!accessToken;
 
 const authSlice = createSlice({
   name: "auth",

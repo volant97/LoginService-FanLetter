@@ -10,7 +10,6 @@ import { loadLocalStorage, saveLocalStorage } from "utils/LocalStorage";
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const BASE_URL = "https://moneyfulpublicpolicy.co.kr";
 
   const [signUpClicked, setSignUpClicked] = useState(false);
   const auth = useSelector((state) => state.auth);
@@ -57,12 +56,17 @@ function Login() {
     return true;
   };
 
+  console.log(`${process.env.REACT_APP_AUTH_BASE_URL}`);
+
   const loginFormSubmitHandler = async (e) => {
     e.preventDefault();
     if (!loginValidate()) return;
 
     // 로그인 로직
-    const { data } = await axios.post(`${BASE_URL}/login`, inputValue);
+    const { data } = await axios.post(
+      `${process.env.AUTH_BASE_URL}/login`,
+      inputValue
+    );
     const { accessToken, userId, nickname, avatar } = data;
     saveLocalStorage("accessToken", accessToken);
     saveLocalStorage("userId", userId);
@@ -107,7 +111,10 @@ function Login() {
     e.preventDefault();
     if (!signUpValidate()) return;
     // 회원가입 로직
-    const { data } = await axios.post(`${BASE_URL}/register`, inputValue);
+    const { data } = await axios.post(
+      `${process.env.AUTH_BASE_URL}/register`,
+      inputValue
+    );
     setInputValue({
       id: "",
       password: "",
