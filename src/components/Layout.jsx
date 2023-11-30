@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { LoginToggle } from "redux/modules/authSlice";
 import { deleteLocalStorage } from "../utils/LocalStorage";
+import notify from "utils/toastify";
 
 function Layout() {
   const navigete = useNavigate();
@@ -13,6 +14,7 @@ function Layout() {
   const logoutBtnClickHandler = () => {
     dispatch(LoginToggle(auth));
     deleteLocalStorage();
+    notify("로그아웃 되었습니다.", "warning");
     navigete("/login");
   };
 
