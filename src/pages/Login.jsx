@@ -39,12 +39,23 @@ function Login() {
   //   console.log(data);
   // };
 
-  const loginBtnClickHandler = () => {
+  // 로그인 화면
+  const loginFormSubmitHandler = () => {
     dispatch(LoginToggle(auth));
     navigate("/");
     notify();
   };
 
+  const goToSignUpPageBtnClickHandler = () => {
+    setInputValue({
+      id: "",
+      password: "",
+      nickname: "",
+    });
+    setSignUpClicked(true);
+  };
+
+  // 회원가입 화면
   const signUpFormSubmitHandler = async (e) => {
     e.preventDefault();
     if (!inputValue.id || !inputValue.password || !inputValue.nickname) {
@@ -72,16 +83,49 @@ function Login() {
     setSignUpClicked(false);
   };
 
+  const goToLoginPageBtnClickHandler = () => {
+    setInputValue({
+      id: "",
+      password: "",
+      nickname: "",
+    });
+    setSignUpClicked(false);
+  };
+
   return (
     <StContainer>
       {!signUpClicked ? (
         // 로그인 화면
         <StLogin>
           <h1>로그인</h1>
-          <input type="text" placeholder="아이디 (4~10글자)" />
-          <input type="password" placeholder="비밀번호 (4~15글자)" />
-          <button onClick={loginBtnClickHandler}>로그인</button>
-          <button onClick={() => setSignUpClicked(true)}>회원가입</button>
+          <form onSubmit={(e) => loginFormSubmitHandler(e)}>
+            <input
+              type="text"
+              placeholder="아이디 (4~10글자)"
+              value={inputValue.id}
+              onChange={(e) =>
+                setInputValue({
+                  ...inputValue,
+                  id: e.target.value,
+                })
+              }
+            />
+            <input
+              type="password"
+              placeholder="비밀번호 (4~15글자)"
+              value={inputValue.password}
+              onChange={(e) =>
+                setInputValue({
+                  ...inputValue,
+                  password: e.target.value,
+                })
+              }
+            />
+            <button type="submit">로그인</button>
+            <button type="button" onClick={goToSignUpPageBtnClickHandler}>
+              go to 회원가입
+            </button>
+          </form>
         </StLogin>
       ) : (
         // 회원가입 화면
@@ -122,8 +166,8 @@ function Login() {
               }
             />
             <button type="submit">회원가입</button>
-            <button type="button" onClick={() => setSignUpClicked(false)}>
-              로그인
+            <button type="button" onClick={goToLoginPageBtnClickHandler}>
+              go to 로그인
             </button>
           </form>
         </StSignUp>
@@ -150,15 +194,23 @@ const StLogin = styled.div`
   align-items: center;
   gap: 20px;
   width: 400px;
-  height: 300px;
   padding: 20px;
   border: 2px solid black;
   border-radius: 10px;
   background-color: #ffffff;
 
-  * {
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
     width: 100%;
-    height: 40px;
+
+    * {
+      width: 100%;
+      height: 40px;
+    }
   }
 
   h1 {
@@ -173,9 +225,8 @@ const StSignUp = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
   width: 400px;
-  height: 330px;
   padding: 20px;
   border: 2px solid black;
   border-radius: 10px;
