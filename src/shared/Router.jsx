@@ -14,20 +14,15 @@ export default function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route
-          path="/"
-          element={
-            auth ? (
-              <Layout>
-                <Route index element={<Home />} />
-                <Route path="/detail/:id" element={<Detail />} />
-                <Route path="/profile" element={<Profile />} />
-              </Layout>
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
+        {auth ? (
+          <>
+            <Route path="/" element={<Layout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/detail/:id" element={<Detail />} />
+              <Route path="/profile" element={<Profile />} />
+            </Route>
+          </>
+        ) : null}
         <Route path="*" element={<Navigate replace to="/login" />} />
       </Routes>
     </BrowserRouter>
