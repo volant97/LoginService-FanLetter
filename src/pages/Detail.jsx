@@ -1,6 +1,6 @@
 import Avatar from "components/common/Avatar";
 import Button from "components/common/Button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getFormattedDate } from "util/date";
@@ -18,14 +18,6 @@ export default function Detail() {
   const { avatar, nickname, createdAt, writedTo, content } = letters.find(
     (letter) => letter.id === id
   );
-
-  const auth = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    if (auth === false) {
-      navigate("/login");
-    }
-  }, []);
 
   const onDeleteBtn = () => {
     const answer = window.confirm("정말로 삭제하시겠습니까?");

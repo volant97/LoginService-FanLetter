@@ -1,17 +1,6 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 
 function Profile() {
-  const navigate = useNavigate();
-  const auth = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    if (auth === false) {
-      navigate("/login");
-    }
-  }, []);
-
   return <div>Profile</div>;
 }
 
