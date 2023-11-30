@@ -18,15 +18,13 @@ function Layout() {
 
   return (
     <>
-      {auth ? (
-        <StContainer>
-          <button onClick={() => navigete("/")}>Home</button>
-          <StProfileAndLogin>
-            <button onClick={() => navigete("/profile")}>내프로필</button>
-            <button onClick={logoutBtnClickHandler}>로그아웃</button>
-          </StProfileAndLogin>
-        </StContainer>
-      ) : null}
+      <StContainer>
+        <button onClick={() => navigete("/")}>Home</button>
+        <StProfileAndLogin>
+          <button onClick={() => navigete("/profile")}>내프로필</button>
+          <button onClick={logoutBtnClickHandler}>로그아웃</button>
+        </StProfileAndLogin>
+      </StContainer>
       <Outlet />
     </>
   );
