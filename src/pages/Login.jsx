@@ -11,6 +11,14 @@ function Login() {
   const dispatch = useDispatch();
   const BASE_URL = "https://moneyfulpublicpolicy.co.kr";
 
+  const [signUpClicked, setSignUpClicked] = useState(false);
+  const auth = useSelector((state) => state.auth);
+  const [inputValue, setInputValue] = useState({
+    id: "",
+    password: "",
+    nickname: "",
+  });
+
   const notify = () =>
     toast.success("🦄 로그인 성공!", {
       position: "top-center",
@@ -23,13 +31,9 @@ function Login() {
       theme: "colored",
     });
 
-  const [signUpClicked, setSignUpClicked] = useState(false);
-  const auth = useSelector((state) => state.auth);
-  const [inputValue, setInputValue] = useState({
-    id: "",
-    password: "",
-    nickname: "",
-  });
+  const saveToLocalStorage = (key, value) => {
+    localStorage.setItem(key, JSON.stringify(value));
+  };
 
   // 회원정보확인 로직?
   // const fetchAuthInfor = async () => {
@@ -62,9 +66,11 @@ function Login() {
 
     // 로그인 로직
     const { data } = await axios.post(`${BASE_URL}/login`, inputValue);
-    const accessToken = data.accessToken;
-    console.log(accessToken);
-
+    const { accessToken, userId, nickname, avatar } = data;
+    saveToLocalStorage("accessToken", accessToken);
+    saveToLocalStorage("userId", userId);
+    saveToLocalStorage("nickname", nickname);
+    saveToLocalStorage("avatar", avatar);
     dispatch(LoginToggle(auth));
     navigate("/");
     notify();
