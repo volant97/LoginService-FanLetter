@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LoginToggle } from "redux/modules/authSlice";
 import styled from "styled-components";
-import { toast } from "react-toastify";
-import { loadLocalStorage, saveLocalStorage } from "utils/LocalStorage";
+import { saveLocalStorage } from "utils/LocalStorage";
+import notify from "utils/toastify";
 
 function Login() {
   const navigate = useNavigate();
@@ -18,18 +18,6 @@ function Login() {
     password: "",
     nickname: "",
   });
-
-  const notify = () =>
-    toast.success("🦄 로그인 성공!", {
-      position: "top-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
 
   // 회원정보확인 로직?
   // const fetchAuthInfor = async () => {
@@ -56,17 +44,22 @@ function Login() {
     return true;
   };
 
-  console.log(`${process.env.REACT_APP_AUTH_BASE_URL}`);
-
   const loginFormSubmitHandler = async (e) => {
     e.preventDefault();
     if (!loginValidate()) return;
 
     // 로그인 로직
-    const { data } = await axios.post(
-      `${process.env.AUTH_BASE_URL}/login`,
-      inputValue
-    );
+    const { data } = await axios
+      .post(`${process.env.REACT_APP_AUTH_BASE_URL}/login`, inputValue)
+      .catch((error) => {
+        console.log(error);
+        if (axios.isAxiosError(error)) {
+          notify(`${error.response.data.message}`, "error");
+          return "";
+        }
+      });
+    if (!data) return;
+
     const { accessToken, userId, nickname, avatar } = data;
     saveLocalStorage("accessToken", accessToken);
     saveLocalStorage("userId", userId);
@@ -74,7 +67,7 @@ function Login() {
     saveLocalStorage("avatar", avatar);
     dispatch(LoginToggle(auth));
     navigate("/");
-    notify();
+    notify("🦄 로그인 성공!", "success");
   };
 
   const goToSignUpPageBtnClickHandler = () => {
@@ -112,7 +105,7 @@ function Login() {
     if (!signUpValidate()) return;
     // 회원가입 로직
     const { data } = await axios.post(
-      `${process.env.AUTH_BASE_URL}/register`,
+      `${process.env.REACT_APP_AUTH_BASE_URL}/register`,
       inputValue
     );
     setInputValue({
