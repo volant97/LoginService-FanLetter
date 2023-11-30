@@ -3,6 +3,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { LoginToggle } from "redux/modules/authSlice";
+import { ToastContainer } from "react-toastify";
 
 function Layout() {
   const navigete = useNavigate();
@@ -29,6 +30,18 @@ function Layout() {
               <button onClick={() => navigete("/login")}>로그인</button>
             )}
           </StProfileAndLogin>
+          <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+          />
         </StContainer>
       ) : null}
       <Outlet />

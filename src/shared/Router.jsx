@@ -8,7 +8,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 export default function Router() {
   const auth = useSelector((state) => state.auth);
-  console.log(auth);
 
   return (
     <BrowserRouter>
