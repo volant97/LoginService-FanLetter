@@ -6,8 +6,6 @@ import Profile from "pages/Profile";
 import { useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-// 라우트 설정, 블락
-
 export default function Router() {
   const auth = useSelector((state) => state.auth);
   console.log(auth);
@@ -15,17 +13,22 @@ export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="/login" element={<Login />} />
-          {auth ? (
-            <>
-              <Route path="/" element={<Home />} />
-              <Route path="/detail/:id" element={<Detail />} />
-              <Route path="/profile" element={<Profile />} />
-            </>
-          ) : null}
-          <Route path="*" element={<Navigate replace to="/login" />} />
-        </Route>
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/"
+          element={
+            auth ? (
+              <Layout>
+                <Route index element={<Home />} />
+                <Route path="/detail/:id" element={<Detail />} />
+                <Route path="/profile" element={<Profile />} />
+              </Layout>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+        <Route path="*" element={<Navigate replace to="/login" />} />
       </Routes>
     </BrowserRouter>
   );
