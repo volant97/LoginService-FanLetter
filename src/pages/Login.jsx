@@ -40,7 +40,25 @@ function Login() {
   // };
 
   // 로그인 화면
-  const loginFormSubmitHandler = () => {
+  const loginValidate = () => {
+    if (!inputValue.id || !inputValue.password) {
+      alert("아이디, 비밀번호를 모두 입력해주세요!");
+      return false;
+    }
+    if (inputValue.id.length < 4 || inputValue.id.length > 10) {
+      alert("아이디는 4~10글자로 작성해주세요!");
+      return false;
+    }
+    if (inputValue.password.length < 4 || inputValue.password.length > 15) {
+      alert("비밀번호는 4~15글자로 작성해주세요!");
+      return false;
+    }
+    return true;
+  };
+
+  const loginFormSubmitHandler = (e) => {
+    e.preventDefault();
+    if (!loginValidate()) return;
     dispatch(LoginToggle(auth));
     navigate("/");
     notify();
@@ -56,20 +74,29 @@ function Login() {
   };
 
   // 회원가입 화면
-  const signUpFormSubmitHandler = async (e) => {
-    e.preventDefault();
+  const signUpValidate = () => {
     if (!inputValue.id || !inputValue.password || !inputValue.nickname) {
-      return alert("아이디, 비밀번호, 닉네임을 모두 입력해주세요!");
+      alert("아이디, 비밀번호, 닉네임을 모두 입력해주세요!");
+      return false;
     }
     if (inputValue.id.length < 4 || inputValue.id.length > 10) {
-      return alert("아이디는 4~10글자로 작성해주세요!");
+      alert("아이디는 4~10글자로 작성해주세요!");
+      return false;
     }
     if (inputValue.password.length < 4 || inputValue.password.length > 15) {
-      return alert("비밀번호는 4~15글자로 작성해주세요!");
+      alert("비밀번호는 4~15글자로 작성해주세요!");
+      return false;
     }
     if (inputValue.nickname.length < 1 || inputValue.nickname.length > 10) {
-      return alert("닉네임은 1~10글자로 작성해주세요!");
+      alert("닉네임은 1~10글자로 작성해주세요!");
+      return false;
     }
+    return true;
+  };
+
+  const signUpFormSubmitHandler = async (e) => {
+    e.preventDefault();
+    if (!signUpValidate()) return;
     const respone = await axios.post(
       "https://moneyfulpublicpolicy.co.kr/register",
       inputValue
