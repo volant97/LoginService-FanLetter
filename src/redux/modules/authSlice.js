@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { loadLocalStorage } from "utils/LocalStorage";
 
-const initialState = false;
+const accessToken = loadLocalStorage("accessToken");
+
+let initialState = !!accessToken ? true : false;
 
 const authSlice = createSlice({
   name: "auth",

@@ -6,6 +6,10 @@ export const saveLocalStorage = (key, value) => {
 };
 
 // 불러오기
+export const loadLocalStorage = (key) => {
+  const value = localStorage.getItem(key);
+  return value ? JSON.parse(value) : null;
+};
 
 // 삭제
 export const deleteLocalStorage = () => {
