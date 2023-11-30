@@ -41,7 +41,7 @@ function Login() {
 
   const loginBtnClickHandler = () => {
     dispatch(LoginToggle(auth));
-    navigate("/home");
+    navigate("/");
     notify();
   };
 
