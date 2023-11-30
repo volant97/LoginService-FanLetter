@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const BASE_URL = "https://moneyfulpublicpolicy.co.kr";
 
   const notify = () =>
     toast.success("🦄 로그인 성공!", {
@@ -30,14 +31,13 @@ function Login() {
     nickname: "",
   });
 
+  // 회원정보확인 로직?
   // const fetchAuthInfor = async () => {
-  //   const { data } = await axios.get("https://moneyfulpublicpolicy.co.kr/user", {
+  //   const respone = await axios.get(BASE_URL...?, {
   //     headers: {
   //       "Content-Type": "application/json",
   //     }
   //   });
-  //   console.log(data);
-  // };
 
   // 로그인 화면
   const loginValidate = () => {
@@ -56,9 +56,15 @@ function Login() {
     return true;
   };
 
-  const loginFormSubmitHandler = (e) => {
+  const loginFormSubmitHandler = async (e) => {
     e.preventDefault();
     if (!loginValidate()) return;
+
+    // 로그인 로직
+    const { data } = await axios.post(`${BASE_URL}/login`, inputValue);
+    const accessToken = data.accessToken;
+    console.log(accessToken);
+
     dispatch(LoginToggle(auth));
     navigate("/");
     notify();
@@ -97,11 +103,8 @@ function Login() {
   const signUpFormSubmitHandler = async (e) => {
     e.preventDefault();
     if (!signUpValidate()) return;
-    const respone = await axios.post(
-      "https://moneyfulpublicpolicy.co.kr/register",
-      inputValue
-    );
-    console.log(respone.data);
+    // 회원가입 로직
+    const { data } = await axios.post(`${BASE_URL}/register`, inputValue);
     setInputValue({
       id: "",
       password: "",
