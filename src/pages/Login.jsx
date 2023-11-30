@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { LoginToggle } from "redux/modules/authSlice";
 import styled from "styled-components";
 import { toast } from "react-toastify";
+import { saveLocalStorage } from "components/common/LocalStorage";
 
 function Login() {
   const navigate = useNavigate();
@@ -30,10 +31,6 @@ function Login() {
       progress: undefined,
       theme: "colored",
     });
-
-  const saveToLocalStorage = (key, value) => {
-    localStorage.setItem(key, JSON.stringify(value));
-  };
 
   // 회원정보확인 로직?
   // const fetchAuthInfor = async () => {
@@ -67,10 +64,10 @@ function Login() {
     // 로그인 로직
     const { data } = await axios.post(`${BASE_URL}/login`, inputValue);
     const { accessToken, userId, nickname, avatar } = data;
-    saveToLocalStorage("accessToken", accessToken);
-    saveToLocalStorage("userId", userId);
-    saveToLocalStorage("nickname", nickname);
-    saveToLocalStorage("avatar", avatar);
+    saveLocalStorage("accessToken", accessToken);
+    saveLocalStorage("userId", userId);
+    saveLocalStorage("nickname", nickname);
+    saveLocalStorage("avatar", avatar);
     dispatch(LoginToggle(auth));
     navigate("/");
     notify();
