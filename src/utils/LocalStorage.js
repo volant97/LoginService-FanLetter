@@ -5,6 +5,8 @@ export const saveLocalStorage = (key, value) => {
   localStorage.setItem(key, JSON.stringify(value));
 };
 
+// 불러오기
+
 // 삭제
 export const deleteLocalStorage = () => {
   localStorage.clear();

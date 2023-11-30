@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { useNavigate } from "react-router-dom";
 import Avatar from "./common/Avatar";
-import { getFormattedDate } from "util/date";
+import { getFormattedDate } from "utils/date";
 
 export default function LetterCard({ letter }) {
   const navigate = useNavigate();

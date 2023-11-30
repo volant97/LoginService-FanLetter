@@ -3,7 +3,7 @@ import Button from "components/common/Button";
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { getFormattedDate } from "util/date";
+import { getFormattedDate } from "utils/date";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteLetter, editLetter } from "redux/modules/lettersSlice";
 

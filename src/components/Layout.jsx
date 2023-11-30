@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { LoginToggle } from "redux/modules/authSlice";
 import { ToastContainer } from "react-toastify";
-import { deleteLocalStorage } from "./common/LocalStorage";
+import { deleteLocalStorage } from "../utils/LocalStorage";
 
 function Layout() {
   const navigete = useNavigate();

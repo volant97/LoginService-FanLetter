@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { LoginToggle } from "redux/modules/authSlice";
 import styled from "styled-components";
 import { toast } from "react-toastify";
-import { saveLocalStorage } from "components/common/LocalStorage";
+import { saveLocalStorage } from "utils/LocalStorage";
 
 function Login() {
   const navigate = useNavigate();
