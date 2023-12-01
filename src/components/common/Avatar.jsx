@@ -1,10 +1,10 @@
 import styled, { css } from "styled-components";
 import defaultUser from "assets/defaultUser.png";
 
-export default function Avatar({ src, size }) {
+export default function Avatar({ src, size, onClick }) {
   return (
     <AvatarFigure size={size}>
-      <img src={src ?? defaultUser} alt="아바타이미지" />
+      <img src={src ?? defaultUser} alt="아바타이미지" onClick={onClick} />
     </AvatarFigure>
   );
 }
