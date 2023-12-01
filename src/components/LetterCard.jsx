@@ -3,12 +3,41 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Avatar from "./common/Avatar";
 import { getFormattedDate } from "utils/date";
+import { loadLocalStorage } from "utils/LocalStorage";
+import axios from "axios";
+import notify from "utils/toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { LoginToggle } from "redux/modules/authSlice";
 
 export default function LetterCard({ letter }) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const auth = useSelector((state) => state.auth);
+
+  const cardClickHandler = async () => {
+    // 회원정보 확인 로직
+    try {
+      const accessToken = loadLocalStorage("accessToken");
+      const respone = await axios.get(
+        `${process.env.REACT_APP_AUTH_BASE_URL}/user`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      navigate(`/detail/${letter.id}`);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        notify(`${error.response.data.message}`, "error");
+        dispatch(LoginToggle(auth));
+      }
+    }
+  };
 
   return (
-    <LetterWrapper onClick={() => navigate(`/detail/${letter.id}`)}>
+    <LetterWrapper onClick={cardClickHandler}>
       <UserInfo>
         <Avatar src={letter.avatar} />
         <NicknameAndDate>

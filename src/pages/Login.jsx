@@ -19,14 +19,6 @@ function Login() {
     nickname: "",
   });
 
-  // 회원정보확인 로직?
-  // const fetchAuthInfor = async () => {
-  //   const respone = await axios.get(BASE_URL...?, {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     }
-  //   });
-
   // 로그인 화면
   const loginValidate = () => {
     if (!inputValue.id || !inputValue.password) {
