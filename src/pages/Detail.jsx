@@ -7,6 +7,7 @@ import { getFormattedDate } from "utils/date";
 import { useSelector, useDispatch } from "react-redux";
 import {
   __deleteLetter,
+  __editLetter,
   __getLetters,
   deleteLetter,
   editLetter,
@@ -33,10 +34,11 @@ export default function Detail() {
     await dispatch(__deleteLetter(id));
     navigate("/");
   };
-  const onEditDone = () => {
+  const onEditDone = async () => {
     if (!editingText) return alert("수정사항이 없습니다.");
 
-    dispatch(editLetter({ id, editingText }));
+    await dispatch(__editLetter({ id, editingText }));
+    dispatch(__getLetters());
     setIsEditing(false);
     setEditingText("");
   };

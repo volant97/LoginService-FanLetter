@@ -65,6 +65,28 @@ export const __deleteLetter = createAsyncThunk(
   }
 );
 
+export const __editLetter = createAsyncThunk(
+  "editLetter",
+  async (payload, thunkAPI) => {
+    // payload = { id, editingText }
+    try {
+      const response = await axios.patch(
+        `${process.env.REACT_APP_DB_SERVER_URL}/letters/${payload.id}`,
+        {
+          content: payload.editingText,
+        }
+      );
+      console.log("edit response : ", response.data);
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      console.log("error : ", error);
+      return thunkAPI.rejectWithValue(error);
+    } finally {
+      thunkAPI.dispatch(editLetter(payload));
+    }
+  }
+);
+
 const lettersSlice = createSlice({
   name: "letters",
   initialState,
