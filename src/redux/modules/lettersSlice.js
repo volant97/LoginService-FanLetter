@@ -15,7 +15,7 @@ export const __getLetters = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_DB_SERVER_URL}/letters`
+        `${process.env.REACT_APP_DB_SERVER_URL}/letters?_sort=createdAt&_order=desc`
       );
       console.log("get response : ", response.data);
       return thunkAPI.fulfillWithValue(response.data);
@@ -115,6 +115,8 @@ const lettersSlice = createSlice({
       state.isError = false;
     },
     [__getLetters.fulfilled]: (state, action) => {
+      console.log("state : ", state.letters);
+      console.log("action : ", action.payload);
       state.isLoading = false;
       state.isError = false;
       state.letters = action.payload;

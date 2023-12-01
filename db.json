@@ -65,6 +65,15 @@
       "writedTo": "카리나",
       "createdAt": "2023-12-01T06:36:56.885Z",
       "userId": "testid02"
+    },
+    {
+      "id": "9255ba62-2d38-480d-b033-97ee79615328",
+      "nickname": "연어초밥",
+      "content": "12312",
+      "avatar": null,
+      "writedTo": "카리나",
+      "createdAt": "2023-12-01T06:50:47.747Z",
+      "userId": "testid02"
     }
   ]
 }
