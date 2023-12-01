@@ -74,6 +74,69 @@
       "writedTo": "카리나",
       "createdAt": "2023-12-01T06:50:47.747Z",
       "userId": "testid02"
+    },
+    {
+      "id": "7d155bee-3697-44fc-ab0d-44589b0f168b",
+      "nickname": "연어초밥",
+      "content": "ㅁㅈㅇㅇㅁㅈㅇ",
+      "avatar": null,
+      "writedTo": "카리나",
+      "createdAt": "2023-12-01T07:32:51.146Z",
+      "userId": "testid02"
+    },
+    {
+      "id": "787558ed-d98c-4473-af2a-b45cacb27797",
+      "nickname": "연어초밥",
+      "content": "dawd",
+      "avatar": null,
+      "writedTo": "카리나",
+      "createdAt": "2023-12-01T07:33:27.082Z",
+      "userId": "testid02"
+    },
+    {
+      "id": "7ae4c007-baf4-4d7d-b204-f3988813ab3c",
+      "nickname": "연어초밥",
+      "content": "awdawd",
+      "avatar": null,
+      "writedTo": "카리나",
+      "createdAt": "2023-12-01T07:34:44.616Z",
+      "userId": "testid02"
+    },
+    {
+      "id": "cc7b11a6-6ffa-458a-850b-553a59b897f0",
+      "nickname": "연어초밥",
+      "content": "awdaw",
+      "avatar": null,
+      "writedTo": "카리나",
+      "createdAt": "2023-12-01T07:39:50.921Z",
+      "userId": "testid02"
+    },
+    {
+      "id": "de843e3f-38f4-45b3-945f-faee66ba82dc",
+      "nickname": "연어초밥",
+      "content": "adwaw",
+      "avatar": null,
+      "writedTo": "카리나",
+      "createdAt": "2023-12-01T07:40:40.173Z",
+      "userId": "testid02"
+    },
+    {
+      "id": "89ff4531-9e2b-4530-a6a4-ee6097c13011",
+      "nickname": "연어초밥",
+      "content": "dawdw",
+      "avatar": null,
+      "writedTo": "카리나",
+      "createdAt": "2023-12-01T07:43:47.114Z",
+      "userId": "testid02"
+    },
+    {
+      "id": "31ca33ad-01a5-4a13-9c6a-4a91a5cd4fb0",
+      "nickname": "연어초밥",
+      "content": "지금 로그인함",
+      "avatar": null,
+      "writedTo": "카리나",
+      "createdAt": "2023-12-01T07:46:02.125Z",
+      "userId": "testid02"
     }
   ]
 }

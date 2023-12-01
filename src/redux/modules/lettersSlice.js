@@ -115,8 +115,6 @@ const lettersSlice = createSlice({
       state.isError = false;
     },
     [__getLetters.fulfilled]: (state, action) => {
-      console.log("state : ", state.letters);
-      console.log("action : ", action.payload);
       state.isLoading = false;
       state.isError = false;
       state.letters = action.payload;

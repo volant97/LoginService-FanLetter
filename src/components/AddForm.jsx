@@ -2,13 +2,17 @@ import { useState } from "react";
 import styled from "styled-components";
 import { v4 as uuid } from "uuid";
 import Button from "./common/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { __addLetter, __getLetters } from "redux/modules/lettersSlice";
 import { loadLocalStorage } from "utils/LocalStorage";
+import axios from "axios";
+import notify from "utils/toastify";
+import { LoginToggle } from "redux/modules/authSlice";
 
 export default function AddForm() {
   // const { setLetters } = useContext(LetterContext);
   const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
 
   const [content, setContent] = useState("");
   const [member, setMember] = useState("카리나");
@@ -27,9 +31,27 @@ export default function AddForm() {
       userId: loadLocalStorage("userId"),
     };
 
-    await dispatch(__addLetter(newLetter));
-    dispatch(__getLetters());
-    setContent("");
+    // 회원정보 확인 로직
+    try {
+      const accessToken = loadLocalStorage("accessToken");
+      const respone = await axios.get(
+        `${process.env.REACT_APP_AUTH_BASE_URL}/user`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      await dispatch(__addLetter(newLetter));
+      dispatch(__getLetters());
+      setContent("");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        notify(`${error.response.data.message}`, "error");
+        dispatch(LoginToggle(auth));
+      }
+    }
   };
 
   return (
