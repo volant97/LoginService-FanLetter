@@ -13,7 +13,7 @@ export default function AddForm() {
   const [content, setContent] = useState("");
   const [member, setMember] = useState("카리나");
 
-  const onAddLetter = (event) => {
+  const onAddLetter = async (event) => {
     event.preventDefault();
     if (!content) return alert("닉네임과 내용은 필수값입니다.");
 
@@ -27,7 +27,7 @@ export default function AddForm() {
       userId: loadLocalStorage("userId"),
     };
 
-    dispatch(__addLetter(newLetter));
+    await dispatch(__addLetter(newLetter));
     dispatch(__getLetters());
     setContent("");
   };

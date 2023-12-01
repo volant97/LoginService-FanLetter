@@ -58,30 +58,12 @@
       "id": "5"
     },
     {
-      "id": "7f122c9e-e64d-4a59-a19b-8accd2526c35",
+      "id": "81fcee4c-65c9-47bc-8c7f-e4be1c3b9142",
       "nickname": "연어초밥",
-      "content": "ㅇㅇㅇㅇ",
+      "content": "1111",
       "avatar": null,
       "writedTo": "카리나",
-      "createdAt": "2023-12-01T04:05:14.934Z",
-      "userId": "testid02"
-    },
-    {
-      "id": "eab5ff88-ba97-441f-b5e2-48ae0bb3f287",
-      "nickname": "연어초밥",
-      "content": "ㅇㅁㅈㅇ",
-      "avatar": null,
-      "writedTo": "카리나",
-      "createdAt": "2023-12-01T04:10:56.795Z",
-      "userId": "testid02"
-    },
-    {
-      "id": "b97de371-fd77-4499-82c7-f23fb88a3cff",
-      "nickname": "연어초밥",
-      "content": "1111111",
-      "avatar": null,
-      "writedTo": "카리나",
-      "createdAt": "2023-12-01T04:11:00.890Z",
+      "createdAt": "2023-12-01T06:29:01.459Z",
       "userId": "testid02"
     }
   ]

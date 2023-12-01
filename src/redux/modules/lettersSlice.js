@@ -10,16 +10,6 @@ const initialState = {
   error: null,
 };
 
-const newLetter = {
-  id: "",
-  nickname: "",
-  content: "",
-  avatar: "",
-  writedTo: "",
-  createdAt: "",
-  userId: "",
-};
-
 export const __getLetters = createAsyncThunk(
   "getLetters",
   async (payload, thunkAPI) => {
@@ -27,7 +17,7 @@ export const __getLetters = createAsyncThunk(
       const response = await axios.get(
         `${process.env.REACT_APP_DB_SERVER_URL}/letters`
       );
-      console.log("response : ", response.data);
+      console.log("get response : ", response.data);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       console.log("error : ", error);
@@ -39,18 +29,38 @@ export const __getLetters = createAsyncThunk(
 export const __addLetter = createAsyncThunk(
   "addLetter",
   async (payload, thunkAPI) => {
+    // payload = newLetter
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_DB_SERVER_URL}/letters`,
         payload
       );
-      console.log("response : ", response.data);
+      console.log("add response : ", response.data);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       console.log("error : ", error);
       return thunkAPI.rejectWithValue(error);
     } finally {
       thunkAPI.dispatch(addLetter(payload));
+    }
+  }
+);
+
+export const __deleteLetter = createAsyncThunk(
+  "deleteLetter",
+  async (payload, thunkAPI) => {
+    // payload = letterId
+    try {
+      const response = await axios.delete(
+        `${process.env.REACT_APP_DB_SERVER_URL}/letters/${payload}`
+      );
+      console.log("delete response : ", response.data);
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      console.log("error : ", error);
+      return thunkAPI.rejectWithValue(error);
+    } finally {
+      thunkAPI.dispatch(deleteLetter(payload));
     }
   }
 );

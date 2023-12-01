@@ -5,11 +5,18 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getFormattedDate } from "utils/date";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteLetter, editLetter } from "redux/modules/lettersSlice";
+import {
+  __deleteLetter,
+  __getLetters,
+  deleteLetter,
+  editLetter,
+} from "redux/modules/lettersSlice";
 
 export default function Detail() {
   const dispatch = useDispatch();
-  const letters = useSelector((state) => state.letters);
+  const { isLodading, error, letters } = useSelector((state) => {
+    return state.letters;
+  });
 
   const [isEditing, setIsEditing] = useState(false);
   const [editingText, setEditingText] = useState("");
@@ -19,11 +26,11 @@ export default function Detail() {
     (letter) => letter.id === id
   );
 
-  const onDeleteBtn = () => {
+  const onDeleteBtn = async () => {
     const answer = window.confirm("정말로 삭제하시겠습니까?");
     if (!answer) return;
 
-    dispatch(deleteLetter(id));
+    await dispatch(__deleteLetter(id));
     navigate("/");
   };
   const onEditDone = () => {
