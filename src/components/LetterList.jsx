@@ -1,10 +1,28 @@
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LetterCard from "./LetterCard";
+import { __getLetters } from "redux/modules/lettersSlice";
+import { useEffect } from "react";
 
 export default function LetterList() {
+  const dispatch = useDispatch();
+
   const activeMember = useSelector((state) => state.member);
-  const letters = useSelector((state) => state.letters);
+  const { isLodading, error, letters } = useSelector((state) => {
+    return state.letters;
+  });
+
+  useEffect(() => {
+    dispatch(__getLetters());
+  }, []);
+
+  // 작동 안하는 듯?
+  // if (isLodading) {
+  //   return <div>로딩중...</div>;
+  // }
+  // if (error) {
+  //   return <div>{error.message}</div>;
+  // }
 
   const filteredLetters = letters.filter(
     (letter) => letter.writedTo === activeMember

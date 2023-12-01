@@ -3,32 +3,32 @@ import styled from "styled-components";
 import { v4 as uuid } from "uuid";
 import Button from "./common/Button";
 import { useDispatch } from "react-redux";
-import { addLetter } from "redux/modules/lettersSlice";
+import { __addLetter, __getLetters } from "redux/modules/lettersSlice";
 import { loadLocalStorage } from "utils/LocalStorage";
 
 export default function AddForm() {
   // const { setLetters } = useContext(LetterContext);
   const dispatch = useDispatch();
 
-  const [nickname, setNickname] = useState("");
   const [content, setContent] = useState("");
   const [member, setMember] = useState("카리나");
 
   const onAddLetter = (event) => {
     event.preventDefault();
-    if (!nickname || !content) return alert("닉네임과 내용은 필수값입니다.");
+    if (!content) return alert("닉네임과 내용은 필수값입니다.");
 
     const newLetter = {
       id: uuid(),
-      nickname,
+      nickname: loadLocalStorage("nickname"),
       content,
       avatar: null,
       writedTo: member,
       createdAt: new Date(),
+      userId: loadLocalStorage("userId"),
     };
 
-    dispatch(addLetter(newLetter));
-    setNickname("");
+    dispatch(__addLetter(newLetter));
+    dispatch(__getLetters());
     setContent("");
   };
 

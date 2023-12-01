@@ -1,54 +1,59 @@
-import { createSlice } from "@reduxjs/toolkit";
-import fakeData from "fakeData.json";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import { useEffect } from "react";
+// import fakeData from "fakeData.json";
 
-// 순수 리덕스
-// Action Value
-// // 팬레터 추가
-// const ADD_LETTER = "letters/ADD_LETTER";
-// // 팬레터 삭제
-// const DELETE_LETTER = "letters/DELETE_LETTER";
-// // 팬레터 수정
-// const EDIT_LETTER = "letters/EDIT_LETTER";
+const initialState = {
+  letters: [],
+  isLoading: false,
+  isError: false,
+  error: null,
+};
 
-// Action Creator
-// export const addLetter = (payload) => {
-//   return { type: ADD_LETTER, payload };
-// };
-// export const deleteLetter = (payload) => {
-//   return { type: DELETE_LETTER, payload };
-// };
-// export const editLetter = (payload) => {
-//   return { type: EDIT_LETTER, payload };
-// };
+const newLetter = {
+  id: "",
+  nickname: "",
+  content: "",
+  avatar: "",
+  writedTo: "",
+  createdAt: "",
+  userId: "",
+};
 
-// initialState
-// const initialState = fakeData;
+export const __getLetters = createAsyncThunk(
+  "getLetters",
+  async (payload, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_DB_SERVER_URL}/letters`
+      );
+      console.log("response : ", response.data);
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      console.log("error : ", error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
-// Reducer
-// const letters = (state = initialState, action) => {
-//   switch (action.type) {
-//     case ADD_LETTER:
-//       const newLetter = action.payload;
-//       return [newLetter, ...state];
-//     case DELETE_LETTER:
-//       const letterId = action.payload;
-//       return state.filter((letter) => letter.id !== letterId);
-//     case EDIT_LETTER:
-//       const { id, editingText } = action.payload;
-//       return state.map((letter) => {
-//         if (letter.id === id) {
-//           return { ...letter, content: editingText };
-//         }
-//         return letter;
-//       });
-//     default:
-//       return state;
-//   }
-// };
-
-// RTK
-// Action Value 필요 X, initialState만 있으면 OK, Action Creator + Reducer 한 번에 해결
-const initialState = fakeData;
+export const __addLetter = createAsyncThunk(
+  "addLetter",
+  async (payload, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_DB_SERVER_URL}/letters`,
+        payload
+      );
+      console.log("response : ", response.data);
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      console.log("error : ", error);
+      return thunkAPI.rejectWithValue(error);
+    } finally {
+      thunkAPI.dispatch(addLetter(payload));
+    }
+  }
+);
 
 const lettersSlice = createSlice({
   name: "letters",
@@ -70,6 +75,22 @@ const lettersSlice = createSlice({
         }
         return letter;
       });
+    },
+  },
+  extraReducers: {
+    [__getLetters.pending]: (state, action) => {
+      state.isLoading = true;
+      state.isError = false;
+    },
+    [__getLetters.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.letters = action.payload;
+    },
+    [__getLetters.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.error = action.payload;
     },
   },
 });
