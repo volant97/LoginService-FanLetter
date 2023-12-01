@@ -12,9 +12,14 @@ import {
   deleteLetter,
   editLetter,
 } from "redux/modules/lettersSlice";
+import axios from "axios";
+import { loadLocalStorage } from "utils/LocalStorage";
+import notify from "utils/toastify";
+import { LoginToggle } from "redux/modules/authSlice";
 
 export default function Detail() {
   const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
   const { isLodading, error, letters } = useSelector((state) => {
     return state.letters;
   });
@@ -26,21 +31,57 @@ export default function Detail() {
   const { avatar, nickname, createdAt, writedTo, content } = letters.find(
     (letter) => letter.id === id
   );
+  const localNickname = loadLocalStorage("nickname");
 
   const onDeleteBtn = async () => {
-    const answer = window.confirm("정말로 삭제하시겠습니까?");
-    if (!answer) return;
-
-    await dispatch(__deleteLetter(id));
-    navigate("/");
+    // 회원정보 확인 로직
+    try {
+      const accessToken = loadLocalStorage("accessToken");
+      const respone = await axios.get(
+        `${process.env.REACT_APP_AUTH_BASE_URL}/user`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      const answer = window.confirm("정말로 삭제하시겠습니까?");
+      if (!answer) return;
+      await dispatch(__deleteLetter(id));
+      navigate("/");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        notify(`${error.response.data.message}`, "error");
+        dispatch(LoginToggle(auth));
+      }
+    }
   };
-  const onEditDone = async () => {
-    if (!editingText) return alert("수정사항이 없습니다.");
 
-    await dispatch(__editLetter({ id, editingText }));
-    dispatch(__getLetters());
-    setIsEditing(false);
-    setEditingText("");
+  const onEditDone = async () => {
+    // 회원정보 확인 로직
+    try {
+      const accessToken = loadLocalStorage("accessToken");
+      const respone = await axios.get(
+        `${process.env.REACT_APP_AUTH_BASE_URL}/user`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      if (!editingText) return alert("수정사항이 없습니다.");
+      await dispatch(__editLetter({ id, editingText }));
+      dispatch(__getLetters());
+      setIsEditing(false);
+      setEditingText("");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        notify(`${error.response.data.message}`, "error");
+        dispatch(LoginToggle(auth));
+      }
+    }
   };
   return (
     <Container>
@@ -75,8 +116,12 @@ export default function Detail() {
           <>
             <Content>{content}</Content>
             <BtnsWrapper>
-              <Button text="수정" onClick={() => setIsEditing(true)} />
-              <Button text="삭제" onClick={onDeleteBtn} />
+              {nickname === localNickname ? (
+                <>
+                  <Button text="수정" onClick={() => setIsEditing(true)} />
+                  <Button text="삭제" onClick={onDeleteBtn} />
+                </>
+              ) : null}
             </BtnsWrapper>
           </>
         )}
