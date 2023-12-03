@@ -108,7 +108,9 @@ function Profile() {
           <Avatar src={editAvatar} />
         ) : (
           <>
-            <Avatar src={editAvatar} onClick={avatarClickHandler} />
+            <span>
+              <Avatar src={editAvatar} onClick={avatarClickHandler} />
+            </span>
             <input
               ref={fileInputRef}
               type="file"
@@ -180,6 +182,12 @@ const StProfile = styled.div`
 
   input {
     display: none;
+  }
+
+  span {
+    border: 2px solid yellow;
+    border-radius: 50%;
+    cursor: pointer;
   }
 `;
 

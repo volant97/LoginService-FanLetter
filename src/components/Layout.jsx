@@ -70,10 +70,10 @@ function Layout() {
   return (
     <>
       <StContainer>
-        <button onClick={() => navigete("/")}>Home</button>
+        <StLayoutBtn onClick={() => navigete("/")}>Home</StLayoutBtn>
         <StProfileAndLogin>
-          <button onClick={profileBtnClickHandler}>내프로필</button>
-          <button onClick={logoutBtnClickHandler}>로그아웃</button>
+          <StLayoutBtn onClick={profileBtnClickHandler}>내프로필</StLayoutBtn>
+          <StLayoutBtn onClick={logoutBtnClickHandler}>로그아웃</StLayoutBtn>
         </StProfileAndLogin>
       </StContainer>
       <Outlet />
@@ -91,4 +91,16 @@ const StContainer = styled.div`
 
 const StProfileAndLogin = styled.div`
   display: flex;
+`;
+
+const StLayoutBtn = styled.button`
+  margin: 3px;
+  font-size: 1rem;
+  background: transparent;
+  border: none;
+
+  &:hover {
+    color: yellow;
+    cursor: pointer;
+  }
 `;

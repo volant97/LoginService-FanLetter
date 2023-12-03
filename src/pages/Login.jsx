@@ -123,6 +123,8 @@ function Login() {
     setSignUpClicked(false);
   };
 
+  console.log("hi");
+
   return (
     <StContainer>
       {!signUpClicked ? (
@@ -153,9 +155,12 @@ function Login() {
               }
             />
             <button type="submit">로그인</button>
-            <button type="button" onClick={goToSignUpPageBtnClickHandler}>
-              go to 회원가입
-            </button>
+            <StloginSignUpToggleBtn
+              type="button"
+              onClick={goToSignUpPageBtnClickHandler}
+            >
+              회원가입
+            </StloginSignUpToggleBtn>
           </form>
         </StLogin>
       ) : (
@@ -197,9 +202,12 @@ function Login() {
               }
             />
             <button type="submit">회원가입</button>
-            <button type="button" onClick={goToLoginPageBtnClickHandler}>
-              go to 로그인
-            </button>
+            <StloginSignUpToggleBtn
+              type="button"
+              onClick={goToLoginPageBtnClickHandler}
+            >
+              로그인
+            </StloginSignUpToggleBtn>
           </form>
         </StSignUp>
       )}
@@ -248,6 +256,10 @@ const StLogin = styled.div`
     display: flex;
     align-items: center;
   }
+
+  button {
+    cursor: pointer;
+  }
 `;
 
 const StSignUp = styled.div`
@@ -281,4 +293,14 @@ const StSignUp = styled.div`
     display: flex;
     align-items: center;
   }
+
+  button {
+    cursor: pointer;
+  }
+`;
+
+const StloginSignUpToggleBtn = styled.button`
+  background: transparent;
+  border: none;
+  color: #919191;
 `;
