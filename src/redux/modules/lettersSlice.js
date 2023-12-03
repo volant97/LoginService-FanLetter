@@ -17,7 +17,7 @@ export const __getLetters = createAsyncThunk(
       const response = await axios.get(
         `${process.env.REACT_APP_DB_SERVER_URL}/letters?_sort=createdAt&_order=desc`
       );
-      console.log("get response : ", response.data);
+      // console.log("get response : ", response.data);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       console.log("error : ", error);
@@ -54,7 +54,7 @@ export const __deleteLetter = createAsyncThunk(
       const response = await axios.delete(
         `${process.env.REACT_APP_DB_SERVER_URL}/letters/${payload}`
       );
-      console.log("delete response : ", response.data);
+      // console.log("delete response : ", response.data);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       console.log("error : ", error);
@@ -76,13 +76,37 @@ export const __editLetter = createAsyncThunk(
           content: payload.editingText,
         }
       );
-      console.log("edit response : ", response.data);
+      // console.log("edit response : ", response.data);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       console.log("error : ", error);
       return thunkAPI.rejectWithValue(error);
     } finally {
       thunkAPI.dispatch(editLetter(payload));
+    }
+  }
+);
+
+// 실행 X...
+export const __updateInfoLetter = createAsyncThunk(
+  "updateInfoLetter",
+  async (payload, thunkAPI) => {
+    // payload = { userId, avatar, nickname }
+    try {
+      const response = await axios.patch(
+        `${process.env.REACT_APP_DB_SERVER_URL}/letters`,
+        {
+          avatar: payload.avatar,
+          nickname: payload.nickname,
+        }
+      );
+      console.log("updateInfo response : ", response.data);
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      console.log("error : ", error);
+      return thunkAPI.rejectWithValue(error);
+    } finally {
+      thunkAPI.dispatch(updateInfoLetter(payload));
     }
   }
 );
@@ -108,6 +132,17 @@ const lettersSlice = createSlice({
         return letter;
       });
     },
+    // 실행 X...
+    updateInfoLetter: (state, action) => {
+      const { userId, avatar, nickname } = action.payload;
+      return state.map((letter) => {
+        console.log("letter : ", letter);
+        if (letter.userId === userId) {
+          return { ...letter, avatar, nickname };
+        }
+        return letter;
+      });
+    },
   },
   extraReducers: {
     [__getLetters.pending]: (state, action) => {
@@ -128,4 +163,5 @@ const lettersSlice = createSlice({
 });
 
 export default lettersSlice.reducer;
-export const { addLetter, deleteLetter, editLetter } = lettersSlice.actions;
+export const { addLetter, deleteLetter, editLetter, updateInfoLetter } =
+  lettersSlice.actions;

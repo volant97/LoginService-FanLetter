@@ -83,6 +83,15 @@
       "writedTo": "카리나",
       "createdAt": "2023-12-03T08:34:56.811Z",
       "userId": "testid02"
+    },
+    {
+      "id": "01862933-08a5-4b42-9128-be962e773931",
+      "nickname": "닉네임22",
+      "content": "안녕하세요",
+      "avatar": "https://react-jwt-avatar.s3.ap-northeast-2.amazonaws.com/23-12-03/24906b11-e140-49f5-9734-2e8714a28fa8.jpg",
+      "writedTo": "카리나",
+      "createdAt": "2023-12-03T12:34:12.351Z",
+      "userId": "testid02"
     }
   ]
 }
