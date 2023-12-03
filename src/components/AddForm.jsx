@@ -4,7 +4,7 @@ import { v4 as uuid } from "uuid";
 import Button from "./common/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { __addLetter, __getLetters } from "redux/modules/lettersSlice";
-import { loadLocalStorage } from "utils/LocalStorage";
+import { deleteLocalStorage, loadLocalStorage } from "utils/LocalStorage";
 import axios from "axios";
 import notify from "utils/toastify";
 import { LoginToggle } from "redux/modules/authSlice";
@@ -25,7 +25,7 @@ export default function AddForm() {
       id: uuid(),
       nickname: loadLocalStorage("nickname"),
       content,
-      avatar: null,
+      avatar: loadLocalStorage("avatar"),
       writedTo: member,
       createdAt: new Date(),
       userId: loadLocalStorage("userId"),
@@ -50,6 +50,7 @@ export default function AddForm() {
       if (axios.isAxiosError(error)) {
         notify(`${error.response.data.message}`, "error");
         dispatch(LoginToggle(auth));
+        deleteLocalStorage();
       }
     }
   };

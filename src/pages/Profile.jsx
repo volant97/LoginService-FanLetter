@@ -1,23 +1,58 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import { loadLocalStorage, saveLocalStorage } from "utils/LocalStorage";
+import {
+  deleteLocalStorage,
+  loadLocalStorage,
+  saveLocalStorage,
+} from "utils/LocalStorage";
 import Avatar from "components/common/Avatar";
 import Button from "components/common/Button";
 import notify from "utils/toastify";
 import axios from "axios";
 import defaultUser from "assets/defaultUser.png";
+import { LoginToggle } from "redux/modules/authSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 function Profile() {
   const nickname = loadLocalStorage("nickname");
   const userId = loadLocalStorage("userId");
   const avatar = loadLocalStorage("avatar");
   const accessToken = loadLocalStorage("accessToken");
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
 
   const [editClicked, setEditClicked] = useState(false);
   const [editNickname, seteditNickname] = useState(nickname);
-  let editAvatar = defaultUser;
+  const [editAvatar, setEditAvatar] = useState(avatar);
+  let selectedAvatar = defaultUser;
 
   const fileInputRef = useRef(null);
+
+  // 회원정보 확인 로직
+  const AuthInfo = async () => {
+    try {
+      const accessToken = loadLocalStorage("accessToken");
+      const respone = await axios.get(
+        `${process.env.REACT_APP_AUTH_BASE_URL}/user`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      saveLocalStorage("avatar", respone.data.avatar);
+      saveLocalStorage("nickname", respone.data.nickname);
+      setEditAvatar(respone.data.avatar);
+      seteditNickname(respone.data.nickname);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        notify(`${error.response.data.message}`, "error");
+        dispatch(LoginToggle(auth));
+        deleteLocalStorage();
+      }
+    }
+  };
 
   const editBtnClickHandler = (editState) => {
     setEditClicked(editState);
@@ -25,10 +60,8 @@ function Profile() {
 
   const editDoneBtnClickHandler = async () => {
     // 수정 파일 전송
-    console.log("avatar : ", avatar);
-    console.log("editAvatar : ", editAvatar);
     const formData = new FormData();
-    formData.append("avatar", editAvatar);
+    formData.append("avatar", selectedAvatar);
     formData.append("nickname", editNickname);
     try {
       const respone = await axios.patch(
@@ -41,7 +74,7 @@ function Profile() {
           },
         }
       );
-      saveLocalStorage("nickname", editNickname);
+      AuthInfo();
       setEditClicked(false);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -55,7 +88,14 @@ function Profile() {
   };
 
   const avatarChangeHandler = (e) => {
-    editAvatar = e.target.files[0];
+    selectedAvatar = e.target.files[0];
+    if (selectedAvatar) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        console.log("reader.result : ", reader.result);
+      };
+      reader.readAsDataURL(selectedAvatar);
+    }
   };
 
   return (
@@ -63,10 +103,10 @@ function Profile() {
       <StProfile>
         <h1>프로필 관리</h1>
         {!editClicked ? (
-          <Avatar src={avatar} />
+          <Avatar src={editAvatar} />
         ) : (
           <>
-            <Avatar src={avatar} onClick={avatarClickHandler} />
+            <Avatar src={editAvatar} onClick={avatarClickHandler} />
             <input
               ref={fileInputRef}
               type="file"
@@ -75,7 +115,7 @@ function Profile() {
           </>
         )}
         {!editClicked ? (
-          <h2>{nickname}</h2>
+          <h2>{editNickname}</h2>
         ) : (
           <textarea
             value={editNickname}

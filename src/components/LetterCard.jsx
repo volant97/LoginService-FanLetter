@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Avatar from "./common/Avatar";
 import { getFormattedDate } from "utils/date";
-import { loadLocalStorage } from "utils/LocalStorage";
+import { deleteLocalStorage, loadLocalStorage } from "utils/LocalStorage";
 import axios from "axios";
 import notify from "utils/toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,6 +32,7 @@ export default function LetterCard({ letter }) {
       if (axios.isAxiosError(error)) {
         notify(`${error.response.data.message}`, "error");
         dispatch(LoginToggle(auth));
+        deleteLocalStorage();
       }
     }
   };

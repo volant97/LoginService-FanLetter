@@ -12,6 +12,31 @@ function Layout() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
+  // 회원정보 확인 로직 - 토큰 만료시 자동으로 로그아웃
+  const authInfo = async () => {
+    try {
+      const accessToken = loadLocalStorage("accessToken");
+      const respone = await axios.get(
+        `${process.env.REACT_APP_AUTH_BASE_URL}/user`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        notify(`${error.response.data.message}`, "error");
+        navigete("/login");
+        dispatch(LoginToggle(auth));
+        deleteLocalStorage();
+      }
+    }
+  };
+
+  authInfo();
+
   const logoutBtnClickHandler = () => {
     dispatch(LoginToggle(auth));
     deleteLocalStorage();
@@ -37,6 +62,7 @@ function Layout() {
       if (axios.isAxiosError(error)) {
         notify(`${error.response.data.message}`, "error");
         dispatch(LoginToggle(auth));
+        deleteLocalStorage();
       }
     }
   };

@@ -13,7 +13,7 @@ import {
   editLetter,
 } from "redux/modules/lettersSlice";
 import axios from "axios";
-import { loadLocalStorage } from "utils/LocalStorage";
+import { deleteLocalStorage, loadLocalStorage } from "utils/LocalStorage";
 import notify from "utils/toastify";
 import { LoginToggle } from "redux/modules/authSlice";
 
@@ -28,10 +28,9 @@ export default function Detail() {
   const [editingText, setEditingText] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
-  const { avatar, nickname, createdAt, writedTo, content } = letters.find(
-    (letter) => letter.id === id
-  );
-  const localNickname = loadLocalStorage("nickname");
+  const { avatar, nickname, createdAt, writedTo, content, userId } =
+    letters.find((letter) => letter.id === id);
+  const localUserId = loadLocalStorage("userId");
 
   const onDeleteBtn = async () => {
     // 회원정보 확인 로직
@@ -54,6 +53,7 @@ export default function Detail() {
       if (axios.isAxiosError(error)) {
         notify(`${error.response.data.message}`, "error");
         dispatch(LoginToggle(auth));
+        deleteLocalStorage();
       }
     }
   };
@@ -80,6 +80,7 @@ export default function Detail() {
       if (axios.isAxiosError(error)) {
         notify(`${error.response.data.message}`, "error");
         dispatch(LoginToggle(auth));
+        deleteLocalStorage();
       }
     }
   };
@@ -116,7 +117,7 @@ export default function Detail() {
           <>
             <Content>{content}</Content>
             <BtnsWrapper>
-              {nickname === localNickname ? (
+              {userId === localUserId ? (
                 <>
                   <Button text="수정" onClick={() => setIsEditing(true)} />
                   <Button text="삭제" onClick={onDeleteBtn} />

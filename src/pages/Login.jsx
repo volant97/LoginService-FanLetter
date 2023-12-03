@@ -43,7 +43,7 @@ function Login() {
     // 로그인 로직
     try {
       const { data } = await axios.post(
-        `${process.env.REACT_APP_AUTH_BASE_URL}/login?expiresIn=60m`,
+        `${process.env.REACT_APP_AUTH_BASE_URL}/login?expiresIn=10s`,
         inputValue
       );
       const { accessToken, userId, nickname, avatar } = data;
