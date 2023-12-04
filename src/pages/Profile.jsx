@@ -12,10 +12,7 @@ import axios from "axios";
 import defaultUser from "assets/defaultUser.png";
 import { LoginToggle } from "redux/modules/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  __updateInfoLetter,
-  updateInfoLetter,
-} from "redux/modules/lettersSlice";
+import { __updateInfoLetter } from "redux/modules/lettersSlice";
 
 function Profile() {
   const nickname = loadLocalStorage("nickname");
@@ -24,9 +21,6 @@ function Profile() {
   const accessToken = loadLocalStorage("accessToken");
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  const { isLodading, error, letters } = useSelector((state) => {
-    return state.letters;
-  });
 
   const [editClicked, setEditClicked] = useState(false);
   const [editNickname, seteditNickname] = useState(nickname);

@@ -9,8 +9,6 @@ import {
   __deleteLetter,
   __editLetter,
   __getLetters,
-  deleteLetter,
-  editLetter,
 } from "redux/modules/lettersSlice";
 import axios from "axios";
 import { deleteLocalStorage, loadLocalStorage } from "utils/LocalStorage";
