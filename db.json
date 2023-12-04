@@ -67,15 +67,6 @@
       "userId": "testid02"
     },
     {
-      "id": "9255ba62-2d38-480d-b033-97ee79615328",
-      "nickname": "연어초밥",
-      "content": "12312",
-      "avatar": null,
-      "writedTo": "카리나",
-      "createdAt": "2023-12-01T06:50:47.747Z",
-      "userId": "testid02"
-    },
-    {
       "id": "594ff3d5-90fd-426d-9215-1962ae197e33",
       "nickname": "닉네임7",
       "content": "테스트",
