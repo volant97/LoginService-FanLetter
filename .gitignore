@@ -17,6 +17,8 @@
 .env.development.local
 .env.production.local
 .env.test.local
+# .env (Vercel에서 설정할 것)
+# .db.json (Glitch로 배포 함)
 
 npm-debug.log*
 yarn-debug.log*
